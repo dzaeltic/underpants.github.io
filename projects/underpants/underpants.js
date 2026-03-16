@@ -21,6 +21,10 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
+_.identity = function(value){
+    return value;
+};
+
 
 /** _.typeOf
 * Arguments:
@@ -42,6 +46,18 @@ var _ = {};
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf = function(value) {
+    //if chain to process of elimination typeOf data type
+    if (Array.isArray(value) === true) {
+        return 'array';
+    } else if (value === null) {
+        return 'null';
+    } else {
+        return typeof value;
+    
+}
+}
+
 
 /** _.first
 * Arguments:
@@ -60,6 +76,30 @@ var _ = {};
 *   _.first(["a", "b", "c"], 1) -> "a"
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
+
+_.first = function(array, num) {
+    //code out edge cases
+    if (Array.isArray(array) !== true || num < 0) {
+        return [];
+    }
+    if (typeof num !== 'number') {
+        return array[0];
+    }
+  //if num is greater than length of array, return whole thing
+    if (num > array.length) {
+    return array;
+   }
+    
+   //return array up to indicated number
+   array.splice(num);
+    return array;
+}
+
+
+
+
+
+
 
 
 /** _.last
@@ -80,6 +120,26 @@ var _ = {};
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function (array, num) {
+ //code out edge cases
+ if (Array.isArray(array) !== true || num < 0) {
+    return [];
+}
+if (typeof num !== 'number') {
+    return array[array.length - 1];
+}
+//if num is greater than length of array, return whole thing
+if (num > array.length) {
+return array;
+}
+array.splice(0, array.length - num);
+return array;
+}
+
+
+
+
+
 
 /** _.indexOf
 * Arguments:
@@ -97,6 +157,17 @@ var _ = {};
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
 
+_.indexOf = function (array, val) {
+    //loop through array and look for indicated value. return index of first occurance of value.
+    for (let i = 0; i < array.length; i++) {
+        if (val === array[i]) {
+            return i;
+        }
+    }      
+    //return -1 if not in array 
+    return -1;
+}
+
 
 /** _.contains
 * Arguments:
@@ -112,6 +183,19 @@ var _ = {};
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+
+_.contains = function (array, val) {
+    if (_.indexOf(array, val) === -1){
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+
+
+
 
 
 /** _.each
@@ -129,6 +213,17 @@ var _ = {};
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
+
+_.each = function (col, func) {
+    //if col is array, call function on eeach element
+}
+
+
+
+
+
+
+
 
 
 /** _.unique
