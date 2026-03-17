@@ -216,6 +216,17 @@ _.contains = function (array, val) {
 
 _.each = function (col, func) {
     //if col is array, call function on eeach element
+if (Array.isArray(col) === true) {
+    for (let i = 0; i < col.length; i++) {
+        func(col[i], i, col);
+    }
+} else {
+    for (let key in col) {
+        func (col[key], key, col);
+    }
+}
+
+
 }
 
 
@@ -236,6 +247,24 @@ _.each = function (col, func) {
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+_.unique = function (arr) {
+    let store = [];
+    for (let i = 0; i < arr.length; i++) {
+        if(_.indexOf(store, arr[i]) === -1) {
+            store.push(arr[i]);
+        }
+    }
+    return store;
+}
+
+
+
+
+
+
+
+
+
 
 /** _.filter
 * Arguments:
@@ -253,6 +282,31 @@ _.each = function (col, func) {
 *   use _.each in your implementation
 */
 
+_.filter = function (arr, func) {
+    let store = [];
+    //_.each(arr, function(func){});
+
+
+
+
+   for (let i = 0; i < arr.length; i++) {
+    if (func(arr[i], i, arr) === true){
+        store.push(arr[i]);
+    }
+   }
+   return store;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /** _.reject
 * Arguments:
@@ -266,6 +320,21 @@ _.each = function (col, func) {
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+_.reject = function (arr, func) {
+    let store = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (func(arr[i], i, arr) === false){
+            store.push(arr[i]);
+        }
+       }
+       return store;
+}
+
+
+
+
+
 
 
 /** _.partition
@@ -287,6 +356,25 @@ _.each = function (col, func) {
 }
 */
 
+_.partition = function (arr, func) {
+    let store1 = [];
+    let store2 = [];
+    let store3 = [];
+   store1 = _.filter(arr, func);
+    store2 = _.reject(arr, func);
+    store3.push(store1);
+    store3.push(store2);
+    return store3;
+
+
+}
+
+
+
+
+
+
+
 
 /** _.map
 * Arguments:
@@ -304,6 +392,30 @@ _.each = function (col, func) {
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+_.map = function (col, func) {
+    
+    let store = [];
+
+    if (Array.isArray(col) === true) {
+        for (let i = 0; i < col.length; i++) {
+            store.push(func(col[i], i, col));
+        }
+    } else {
+        for (let key in col) {
+            store.push(func(col[key], key, col));
+        }
+    }
+    
+    return store;
+}
+
+
+
+
+
+
+
+
 
 /** _.pluck
 * Arguments:
@@ -315,6 +427,21 @@ _.each = function (col, func) {
 * Examples:
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
+
+_.pluck = function (arr, prop) {
+    
+  return _.map(arr, function(obj){return obj[prop]});
+
+
+
+
+
+}
+
+
+
+
+
 
 
 /** _.every
@@ -337,6 +464,57 @@ _.each = function (col, func) {
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
+
+_.every = function (col, func) {
+    
+    
+    if (Array.isArray(col) === true) {
+        if (!func) {
+            for (let value of col) {
+                if (!value) {
+                    return false;
+                }
+            } return true;
+        }
+
+        for (let i = 0; i < col.length; i++) {
+            if (!func(col[i], i, col)) {
+                return false;
+            }
+        } return true;
+
+
+    } else {
+        if (!func) {
+            for (let key in col) {
+                if (!col[key]) {
+                    return false;
+                }
+            } return true;
+        } 
+
+        for (let key in col) {
+            if (!func(col[key], key, col)) {
+                return false;
+            }
+        } return true;
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /** _.some
