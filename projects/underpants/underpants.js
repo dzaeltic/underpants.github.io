@@ -538,6 +538,48 @@ _.every = function (col, func) {
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+_.some = function (col, func) {
+    if (Array.isArray(col) === true) {
+        if (!func) {
+            for (let value of col) {
+                if (value) {
+                    return true;
+                }
+            } return false;
+        }
+
+        for (let i = 0; i < col.length; i++) {
+            if (func(col[i], i, col)) {
+                return true;
+            }
+        } return false;
+
+
+    } else {
+        if (!func) {
+            for (let key in col) {
+                if (col[key]) {
+                    return true;
+                }
+            } return false;
+        } 
+
+        for (let key in col) {
+            if (func(col[key], key, col)) {
+                return true;
+            }
+        } return false;
+
+
+    }
+}
+
+
+
+
+
+
+
 
 /** _.reduce
 * Arguments:
@@ -558,6 +600,48 @@ _.every = function (col, func) {
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function (arr, func, seed) {
+    //create update var
+    let update;
+    
+    //if seed exists, start there. 
+    if (seed === undefined) {
+        update = arr[0];
+       //loop thru array
+        for (let i = 1; i < arr.length; i++) {
+            //call function with with previous result and re-assign it
+            update = func (update, arr[i], i);
+        }
+
+
+    } else
+
+     {
+        //if seed doesn't exist start at first value of array
+        update = seed;
+        //loop thru array
+        for (let i = 0; i < arr.length; i++) {
+            //call function with with previous result and re-assign it
+            update = func (update, arr[i], i);
+        }
+    }
+   
+   
+   
+   
+    return update;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /** _.extend
 * Arguments:
@@ -573,6 +657,36 @@ _.every = function (col, func) {
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = (...obj) => {
+    //make update = first object
+    let update = obj[0];
+
+    
+    
+    //for each object following, add it to the first one
+    for (let i = 1; i < obj.length; i++) {
+        Object.assign(update, obj[i]);
+    }
+
+return update;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
